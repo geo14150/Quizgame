@@ -72,7 +72,7 @@ getNewQuestion = () => {
     availableQuesions.splice(questionIndex, 1);
     acceptingAnswers = true;
    
-};
+})
 choices.forEach(choice => {
     choice.addEventListener("click", e => {
         console.log(e.target);
@@ -99,4 +99,6 @@ choices.forEach(choice => {
 incrementScore = num =>{
     score+=num;
     scoreText.innerText=score;
-};
+}
+}
+
