@@ -21,13 +21,18 @@ fetch("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=mul
         console.log(loadedQuestions.results);
         questions = loadedQuestions.results.map(loadedQuestions => {
             const formattedQuestion = { 
-            question: loadedQuestions.question
+            // Εφαρμογή αποκωδικοποίησης στην ερώτηση
+            question: decodeHtmlEntities(loadedQuestions.question)
         };
-        const answerChoices = [...loadedQuestions.incorrect_answers];
+        // Εφαρμογή αποκωδικοποίησης στις λανθασμένες απαντήσεις
+        const answerChoices = [...loadedQuestions.incorrect_answers.map(ans => decodeHtmlEntities(ans))];
        
         formattedQuestion.answer = Math.floor(Math.random() *3)+1;
-        answerChoices.splice(formattedQuestion.answer -1, 0,
-            loadedQuestions.correct_answer);
+        // Εφαρμογή αποκωδικοποίησης στη σωστή απάντηση πριν την προσθήκη
+        const decodedCorrectAnswer = decodeHtmlEntities(loadedQuestions.correct_answer);
+
+        answerChoices.splice(formattedQuestion.answer -1, 0, decodedCorrectAnswer);
+        
         answerChoices.forEach((choice, index) => {
             formattedQuestion["choice" + (index+1)] = choice;
         })
@@ -101,5 +106,6 @@ incrementScore = num =>{
     scoreText.innerText=score;
 }
 }
+
 
 
